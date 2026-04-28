@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My App</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .btn-download {
+      transition: all 0.2s ease;
+    }
+    .btn-download:hover {
+      transform: translateY(-2px);
+    }
+    .btn-download:active {
+      transform: translateY(0px);
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    .stagger-1 { animation-delay: 0.05s; }
+    .stagger-2 { animation-delay: 0.1s; }
+    .stagger-3 { animation-delay: 0.15s; }
+    .stagger-4 { animation-delay: 0.2s; }
+    .stagger-5 { animation-delay: 0.25s; }
+    .stagger-6 { animation-delay: 0.3s; }
+    .stagger-7 { animation-delay: 0.35s; }
+    .stagger-8 { animation-delay: 0.4s; }
+    .stagger-9 { animation-delay: 0.45s; }
+    .stagger-10 { animation-delay: 0.5s; }
+  </style>
+</head>
+<body class="min-h-screen bg-zinc-50 text-zinc-800 flex flex-col items-center justify-center px-4 py-16">
+
+  <!-- Header -->
+  <div id="header-section" class="text-center mb-12 fade-in stagger-1">
+    <h1 id="site-title" class="text-2xl font-semibold tracking-tight text-zinc-900">My App</h1>
+    <p id="site-desc" class="mt-2 text-sm text-zinc-400 font-light"></p>
+  </div>
+
+  <!-- Buttons Container -->
+  <div id="buttons-container" class="w-full max-w-xs flex flex-col gap-3">
+    <!-- skeleton loaders -->
+    <div class="h-12 rounded-xl bg-zinc-200 animate-pulse"></div>
+    <div class="h-12 rounded-xl bg-zinc-200 animate-pulse opacity-70"></div>
+    <div class="h-12 rounded-xl bg-zinc-200 animate-pulse opacity-40"></div>
+  </div>
+
+  <!-- Error state -->
+  <div id="error-state" class="hidden text-center mt-8">
+    <p class="text-sm text-zinc-400">ไม่สามารถโหลดข้อมูลได้</p>
+    <button onclick="loadConfig()" class="mt-3 text-xs text-zinc-500 underline underline-offset-4">ลองใหม่</button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-16 text-xs text-zinc-300 fade-in stagger-2">
+    &copy; <span id="year"></span> · <span id="site-title-footer"></span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ============================================================
+    // CONFIG — แก้ค่านี้ให้ตรงกับ GitHub repo ของคุณ
+    // ============================================================
+    const GITHUB_USER   = 'Merueru';   // เช่น  octocat
+    const GITHUB_REPO   = 'Linkhub';       // เช่น  my-web-app
+    const GITHUB_BRANCH = 'main';
+    const CONFIG_FILE   = 'config.json';
+    // ============================================================
+
+    const RAW_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${CONFIG_FILE}`;
+
+    async function loadConfig() {
+      const container = document.getElementById('buttons-container');
+      const errorEl   = document.getElementById('error-state');
+      errorEl.classList.add('hidden');
+
+      try {
+        // cache-bust เพื่อให้ได้ข้อมูลล่าสุดเสมอ
+        const res = await fetch(`${RAW_URL}?t=${Date.now()}`);
+        if (!res.ok) throw new Error('fetch failed');
+        const cfg = await res.json();
+
+        // --- Header ---
+        const titleEl = document.getElementById('site-title');
+        const descEl  = document.getElementById('site-desc');
+        const footerTitleEl = document.getElementById('site-title-footer');
+        if (cfg.title) {
+          titleEl.textContent = cfg.title;
+          document.title = cfg.title;
+          if (footerTitleEl) footerTitleEl.textContent = cfg.title;
+        }
+        if (cfg.description) descEl.textContent = cfg.description;
+
+        // --- Buttons ---
+        container.innerHTML = '';
+        if (!cfg.buttons || cfg.buttons.length === 0) {
+          container.innerHTML = '<p class="text-center text-sm text-zinc-400">ยังไม่มีลิงก์</p>';
+          return;
+        }
+
+        cfg.buttons.forEach((btn, i) => {
+          if (!btn.enabled) return;
+
+          const stagger = Math.min(i + 1, 10);
+          const a = document.createElement('a');
+          a.href = btn.url || '#';
+          if (btn.type === 'download') {
+            a.setAttribute('download', btn.filename || '');
+          } else {
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+          }
+
+          // Color scheme
+          const colors = {
+            default:  'bg-zinc-900 hover:bg-zinc-700 text-white',
+            blue:     'bg-blue-600 hover:bg-blue-500 text-white',
+            green:    'bg-emerald-600 hover:bg-emerald-500 text-white',
+            red:      'bg-rose-600 hover:bg-rose-500 text-white',
+            outline:  'border border-zinc-300 hover:bg-zinc-100 text-zinc-800 bg-white',
+          };
+          const colorClass = colors[btn.color] || colors.default;
+
+          a.className = `btn-download fade-in stagger-${stagger} flex items-center justify-between gap-3 w-full px-5 py-3 rounded-xl text-sm font-medium ${colorClass}`;
+
+          // Icon mapping
+          const icons = {
+            download: `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>`,
+            link:     `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 015.656 5.656l-3 3a4 4 0 01-5.656-5.656l1.5-1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M10.172 13.828a4 4 0 01-5.656-5.656l3-3a4 4 0 015.656 5.656l-1.5 1.5"/></svg>`,
+            web:      `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>`,
+          };
+          const iconSVG = icons[btn.type] || icons.link;
+
+          a.innerHTML = `
+            <span>${btn.label || 'ลิงก์'}</span>
+            ${iconSVG}
+          `;
+          container.appendChild(a);
+        });
+
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = '';
+        errorEl.classList.remove('hidden');
+      }
+    }
+
+    loadConfig();
+  </script>
+</body>
+</html>
