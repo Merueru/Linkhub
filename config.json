@@ -28,14 +28,14 @@
       "label": "P2P Stream",
       "url": "https://merueru.github.io/P2P-Stream/",
       "type": "link",
-      "color": "blue",
+      "color": "default",
       "enabled": true
     },
     {
       "label": "Trading and Fantasy",
       "url": "https://merueru.github.io/Trading-Sim-and-Fantasy/",
       "type": "link",
-      "color": "red",
+      "color": "default",
       "enabled": true
     },
     {
