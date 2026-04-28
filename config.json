@@ -1,6 +1,6 @@
 {
-  "title": "My App",
-  "description": "เลือกลิงก์หรือดาวน์โหลดด้านล่าง",
+  "title": "My Link Hub",
+  "description": "เลือกลิงก์เพื่อไปสู่เว็บหรือดาวน์โหลดด้านล่าง",
   "buttons": [
     {
       "label": "Flashcard PRO - Web link",
