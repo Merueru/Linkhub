@@ -83,18 +83,10 @@
       errorEl.classList.add('hidden');
 
       try {
-          // 1. เพิ่ม Cache-Control Header และใช้โหมด 'no-cache'
-          const res = await fetch(`${RAW_URL}?t=${Date.now()}`, {
-            method: 'GET',
-            headers: {
-              'Cache-Control': 'no-cache',
-              'Pragma': 'no-cache'
-            },
-            cache: 'no-store' // บังคับให้ข้ามการเก็บ cache ในเบราว์เซอร์โดยสิ้นเชิง
-          });
-
-          if (!res.ok) throw new Error('fetch failed');
-          const cfg = await res.json();
+        // cache-bust เพื่อให้ได้ข้อมูลล่าสุดเสมอ
+        const res = await fetch(`${RAW_URL}?t=${Date.now()}`);
+        if (!res.ok) throw new Error('fetch failed');
+        const cfg = await res.json();
 
         // --- Header ---
         const titleEl = document.getElementById('site-title');
