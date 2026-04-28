@@ -6,7 +6,7 @@
       "label": "Flashcard PRO - Web link",
       "url": "https://merueru.github.io/Flashcard-PRO/",
       "type": "link",
-      "color": "blue",
+      "color": "default",
       "enabled": true
     },
     {
@@ -16,6 +16,48 @@
       "color": "outline",
       "enabled": true,
       "filename": "Flashcard PRO V 1.5.6.1"
+    },
+    {
+      "label": "Custom Card table",
+      "url": "https://merueru.github.io/Custom-Card-table/",
+      "type": "link",
+      "color": "default",
+      "enabled": true
+    },
+    {
+      "label": "P2P Stream",
+      "url": "https://merueru.github.io/P2P-Stream/",
+      "type": "link",
+      "color": "blue",
+      "enabled": true
+    },
+    {
+      "label": "Trading and Fantasy",
+      "url": "https://merueru.github.io/Trading-Sim-and-Fantasy/",
+      "type": "link",
+      "color": "red",
+      "enabled": true
+    },
+    {
+      "label": "UGal",
+      "url": "https://merueru.github.io/UGal",
+      "type": "link",
+      "color": "default",
+      "enabled": true
+    },
+    {
+      "label": "Height Comparison",
+      "url": "https://merueru.github.io/Height-Comparison/",
+      "type": "link",
+      "color": "default",
+      "enabled": true
+    },
+    {
+      "label": "Family tree",
+      "url": "https://merueru.github.io/Family-tree/",
+      "type": "link",
+      "color": "default",
+      "enabled": true
     }
   ]
 }
