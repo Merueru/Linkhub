@@ -3,21 +3,6 @@
   "description": "เลือกลิงก์หรือดาวน์โหลดด้านล่าง",
   "buttons": [
     {
-      "label": "เว็บไซต์หลัก",
-      "url": "https://example.com",
-      "type": "web",
-      "color": "default",
-      "enabled": true
-    },
-    {
-      "label": "ดาวน์โหลดแอป",
-      "url": "https://example.com/app.zip",
-      "type": "download",
-      "filename": "app.zip",
-      "color": "green",
-      "enabled": true
-    },
-    {
       "label": "เอกสาร / Docs",
       "url": "https://example.com/docs",
       "type": "link",
