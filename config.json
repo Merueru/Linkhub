@@ -3,6 +3,13 @@
   "description": "เลือกลิงก์เพื่อไปสู่เว็บหรือดาวน์โหลดด้านล่าง",
   "buttons": [
     {
+      "label": "Flashcard PRO",
+      "url": "https://merueru.github.io/Flashcard-PRO/",
+      "type": "link",
+      "color": "outline",
+      "enabled": true
+    },
+    {
       "label": "Flashcard PRO - Web link",
       "url": "https://merueru.github.io/Flashcard-PRO/",
       "type": "link",
