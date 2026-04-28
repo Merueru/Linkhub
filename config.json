@@ -3,10 +3,10 @@
   "description": "เลือกลิงก์หรือดาวน์โหลดด้านล่าง",
   "buttons": [
     {
-      "label": "เอกสาร / Docs",
-      "url": "https://example.com/docs",
+      "label": "Flashcard PRO - Web link",
+      "url": "https://merueru.github.io/Flashcard-PRO/",
       "type": "link",
-      "color": "outline",
+      "color": "blue",
       "enabled": true
     }
   ]
